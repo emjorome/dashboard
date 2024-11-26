@@ -9,6 +9,13 @@ import ControlWeather from './components/ControlWeather';
 import LineChartWeather from './components/LineChartWeather';
 import { useEffect, useState } from 'react';
 
+interface HourlyWeather {
+   time: string;
+   temperature: string;
+   condition: string;
+   humidity: string;
+ }
+
 function App() {
   //const [count, setCount] = useState(0)
 
@@ -19,6 +26,7 @@ function App() {
       pressure: '',
       windSpeed: '',
    });
+   const [hourlyWeather, setHourlyWeather] = useState<HourlyWeather[]>([]);
 
    // Función para obtener datos desde la API
    const fetchWeatherData = async () => {
@@ -32,19 +40,39 @@ function App() {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(textResponse, 'text/xml');
 
-      // Extraer datos específicos del XML
+      // Extraer datos específicos del XML para el Indicator weather
       const temperature = xmlDoc.querySelector('temperature')?.getAttribute('value') || '';
       const humidity = xmlDoc.querySelector('humidity')?.getAttribute('value') || '';
       const pressure = xmlDoc.querySelector('pressure')?.getAttribute('value') || '';
       const windSpeed = xmlDoc.querySelector('windSpeed')?.getAttribute('value') || '';
 
-      // Actualizar el estado
+      // Actualizar el estado 
       setWeatherData({
          temperature: `${(parseFloat(temperature) - 273.15).toFixed(2)}°C`, // Convertir de Kelvin a Celsius
          humidity: `${humidity}%`,
          pressure: `${pressure} hPa`,
          windSpeed: `${(parseFloat(windSpeed) * 3.6).toFixed(2)} km/h`, // Convertir de m/s a km/h
       });
+
+      // Extraer datos específicos del XML para el Table weather
+      const timeNodes = xmlDoc.querySelectorAll('time');
+      const hourlyData = Array.from(timeNodes).map((node) => {
+        const time = node.getAttribute('from')?.split('T')[1]?.slice(0, 5) || ''; // Extraer hora
+        const temperature = node.querySelector('temperature')?.getAttribute('value') || '';
+        const condition = node.querySelector('symbol')?.getAttribute('name') || '';
+        const humidity = node.querySelector('humidity')?.getAttribute('value') || '';
+
+        return {
+          time,
+          temperature: `${(parseFloat(temperature) - 273.15).toFixed(2)}°C`, // Convertir Kelvin a Celsius
+          condition,
+          humidity: `${humidity}%`,
+        };
+      });
+      
+      // Actualizar el estado 
+      setHourlyWeather(hourlyData.slice(0, 10)); // Mostrar solo las primeras 10 horas
+
       } catch (error) {
       console.error('Error al obtener datos del clima:', error);
       }
@@ -80,7 +108,7 @@ function App() {
                         <ControlWeather/>
                   </Grid>
                   <Grid size={{ xs: 12, xl: 9 }}>
-                        <TableWeather/>
+                        <TableWeather hourlyData={hourlyWeather}/>
                   </Grid>
                </Grid>
 

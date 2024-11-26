@@ -6,7 +6,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(
+interface HourlyWeather {
+  time: string; // Hora (e.g., "14:00")
+  temperature: string; // Temperatura (e.g., "28.5°C")
+  condition: string; // Condición climática (e.g., "Clear")
+  humidity: string; // Humedad (e.g., "65%")
+}
+
+interface TableWeatherProps {
+  hourlyData: HourlyWeather[]; // Datos por horas
+}
+
+/*function createData(
   name: string,
   calories: number,
   fat: number,
@@ -22,34 +33,32 @@ const rows = [
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+];*/
 
-export default function BasicTable() {
+export default function BasicTable({ hourlyData }: TableWeatherProps) {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="simple table">
+      <Table aria-label="hourly weather table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Hora</TableCell>
+            <TableCell align="right">Temperatura</TableCell>
+            <TableCell align="right">Clima</TableCell>
+            <TableCell align="right">Humedad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {hourlyData.map((row, index) => (
             <TableRow
-              key={row.name}
+              key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.time}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.temperature}</TableCell>
+              <TableCell align="right">{row.condition}</TableCell>
+              <TableCell align="right">{row.humidity}</TableCell>
             </TableRow>
           ))}
         </TableBody>
