@@ -28,6 +28,20 @@ function App() {
       windSpeed: '',
    });
    const [hourlyWeather, setHourlyWeather] = useState<HourlyWeather[]>([]);
+   //Calcular el total de precipitacion
+   const totalPrecipitation = hourlyWeather.reduce(
+      (acc, data) => acc + data.precipitation,
+      0
+    );
+
+    // Calcular el promedio de las temperaturas de las próximas horas
+   const averageTemperature = hourlyWeather.reduce((acc, data) => {
+      const temp = parseFloat(data.temperature); // Asegúrate de que la temperatura esté en número
+      return acc + temp;
+   }, 0) / hourlyWeather.length;
+   
+   // Asegúrate de que la temperatura esté en un valor razonable antes de mostrarla
+   const averageTemperatureFormatted = isNaN(averageTemperature) ? 0 : averageTemperature.toFixed(2);
 
    // Función para obtener datos desde la API
    const fetchWeatherData = async () => {
@@ -131,6 +145,14 @@ function App() {
                   time: data.time,
                   precipitation: data.precipitation,
                }))}/>
+            </Grid>
+
+            <Grid size={{ xs: 12, xl: 3 }}>
+              <IndicatorWeather title={'Temperatura promedio'} subtitle={'°C (Próximas horas)'} value={`${averageTemperatureFormatted} °C`} /> 
+            </Grid>
+
+            <Grid size={{ xs: 12, xl: 3 }}>
+              <IndicatorWeather title={'Total de Lluvia'} subtitle={'mm (Próximas horas)'} value={`${totalPrecipitation.toFixed(2)} mm`} /> 
             </Grid>
 		  
     </Grid>
