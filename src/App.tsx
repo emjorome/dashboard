@@ -60,16 +60,16 @@ function App() {
 
        	  {/* Indicadores */}
            <Grid size={{ xs: 12, xl: 3 }}>
-              <IndicatorWeather title={'Indicator 1'} subtitle={'Unidad 1'} value={"1.23"} /> 
+              <IndicatorWeather title={'Temperatura'} subtitle={'Actual'} value={weatherData.temperature} /> 
            </Grid>
            <Grid size={{ xs: 12, xl: 3 }}>
-              <IndicatorWeather title={'Indicator 2'} subtitle={'Unidad 2'} value={"3.12"} />
+              <IndicatorWeather title={'Humedad'} subtitle={'Relativa'} value={weatherData.humidity} />
            </Grid>
            <Grid size={{ xs: 12, xl: 3 }}>
-              <IndicatorWeather title={'Indicator 3'} subtitle={'Unidad 3'} value={"2.31"} />
+              <IndicatorWeather title={'Presión'} subtitle={'Atmosférica'} value={weatherData.pressure} />
            </Grid>
            <Grid size={{ xs: 12, xl: 3 }}>
-              <IndicatorWeather title={'Indicator 4'} subtitle={'Unidad 4'} value={"3.21"} />
+              <IndicatorWeather title={'Viento'} subtitle={'Velocidad'} value={weatherData.windSpeed} />
             </Grid>
 		      
            {/* Tabla */}
