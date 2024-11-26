@@ -93,6 +93,10 @@ function App() {
   return (
     <Grid container spacing={5}>
 
+            <Grid size={{ xs: 12, xl: 3 }}>
+              Guayaquil 
+            </Grid>
+
        	  {/* Indicadores */}
            <Grid size={{ xs: 12, xl: 3 }}>
               <IndicatorWeather title={'Temperatura'} subtitle={'Actual'} value={weatherData.temperature} /> 
