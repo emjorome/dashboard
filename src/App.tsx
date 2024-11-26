@@ -9,18 +9,19 @@ import ControlWeather from './components/ControlWeather';
 import LineChartWeather from './components/LineChartWeather';
 import { useEffect, useState } from 'react';
 
-interface HourlyWeather {
+interface HourlyWeather { //para tabla
    time: string;
    temperature: string;
    condition: string;
    humidity: string;
+   precipitation: number; //grafico
  }
 
 function App() {
   //const [count, setCount] = useState(0)
 
    // Estado para almacenar los datos del clima
-   const [weatherData, setWeatherData] = useState({
+   const [weatherData, setWeatherData] = useState({ //para indicadores
       temperature: '',
       humidity: '',
       pressure: '',
@@ -61,12 +62,18 @@ function App() {
         const temperature = node.querySelector('temperature')?.getAttribute('value') || '';
         const condition = node.querySelector('symbol')?.getAttribute('name') || '';
         const humidity = node.querySelector('humidity')?.getAttribute('value') || '';
+        //Para el grafico LineCharWeather
+        const precipitationNode = node.querySelector('precipitation');
+        const precipitation = precipitationNode
+        ? parseFloat(precipitationNode.getAttribute('value') || '0')
+        : 0; //
 
         return {
           time,
           temperature: `${(parseFloat(temperature) - 273.15).toFixed(2)}°C`, // Convertir Kelvin a Celsius
           condition,
           humidity: `${humidity}%`,
+          precipitation, //Grafico
         };
       });
       
@@ -116,7 +123,10 @@ function App() {
 		      
            {/* Gráfico */}
            <Grid size={{ xs: 12, xl: 4 }}>
-               <LineChartWeather/>
+               <LineChartWeather precipitationData={hourlyWeather.map((data) => ({
+                  time: data.time,
+                  precipitation: data.precipitation,
+               }))}/>
             </Grid>
 		  
     </Grid>

@@ -11,6 +11,7 @@ interface HourlyWeather {
   temperature: string; // Temperatura (e.g., "28.5°C")
   condition: string; // Condición climática (e.g., "Clear")
   humidity: string; // Humedad (e.g., "65%")
+  precipitation: number;
 }
 
 interface TableWeatherProps {
