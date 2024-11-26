@@ -45,7 +45,7 @@ function App() {
       const temperature = xmlDoc.querySelector('temperature')?.getAttribute('value') || '';
       const humidity = xmlDoc.querySelector('humidity')?.getAttribute('value') || '';
       const pressure = xmlDoc.querySelector('pressure')?.getAttribute('value') || '';
-      const windSpeed = xmlDoc.querySelector('windSpeed')?.getAttribute('value') || '';
+      const windSpeed = xmlDoc.querySelector('windSpeed')?.getAttribute('mps') || '';
 
       // Actualizar el estado 
       setWeatherData({
