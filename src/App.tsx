@@ -7,9 +7,53 @@ import IndicatorWeather from './components/IndicatorWeather'
 import TableWeather from './components/TableWeather';
 import ControlWeather from './components/ControlWeather';
 import LineChartWeather from './components/LineChartWeather';
+import { useEffect, useState } from 'react';
 
 function App() {
   //const [count, setCount] = useState(0)
+
+   // Estado para almacenar los datos del clima
+   const [weatherData, setWeatherData] = useState({
+      temperature: '',
+      humidity: '',
+      pressure: '',
+      windSpeed: '',
+   });
+
+   // Función para obtener datos desde la API
+   const fetchWeatherData = async () => {
+      try {
+      const response = await fetch(
+         'https://api.openweathermap.org/data/2.5/forecast?q=Guayaquil&mode=xml&appid=ad655bd73162581d52d762d5e28c8076'
+      );
+      const textResponse = await response.text();
+
+      // Parsear XML (usando DOMParser)
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(textResponse, 'text/xml');
+
+      // Extraer datos específicos del XML
+      const temperature = xmlDoc.querySelector('temperature')?.getAttribute('value') || '';
+      const humidity = xmlDoc.querySelector('humidity')?.getAttribute('value') || '';
+      const pressure = xmlDoc.querySelector('pressure')?.getAttribute('value') || '';
+      const windSpeed = xmlDoc.querySelector('windSpeed')?.getAttribute('value') || '';
+
+      // Actualizar el estado
+      setWeatherData({
+         temperature: `${(parseFloat(temperature) - 273.15).toFixed(2)}°C`, // Convertir de Kelvin a Celsius
+         humidity: `${humidity}%`,
+         pressure: `${pressure} hPa`,
+         windSpeed: `${(parseFloat(windSpeed) * 3.6).toFixed(2)} km/h`, // Convertir de m/s a km/h
+      });
+      } catch (error) {
+      console.error('Error al obtener datos del clima:', error);
+      }
+   };
+
+   // Ejecutar fetchWeatherData al montar el componente
+   useEffect(() => {
+      fetchWeatherData();
+   }, []);
 
   return (
     <Grid container spacing={5}>
