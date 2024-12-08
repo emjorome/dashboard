@@ -8,18 +8,17 @@ interface MyProp {
 }
 
 export default function LineChartWeather(props: MyProp) {
-
-    let [rows, setRows] = useState<Item2[]>([])
     const [xLabels, setXLabels] = useState<string[]>([]);
     const [yLabels, setYLabels] = useState<number[]>([]);
 
     useEffect(() => {
-        setRows(props.itemsIn)
-        const xData = rows.map((row) => String(row.date));
-        const yData = rows.map((row) => parseFloat(String(row.temperature)));
+        if (props.itemsIn && props.itemsIn.length > 0) {
+            const xData = props.itemsIn.map((item) => String(item.date));
+            const yData = props.itemsIn.map((item) => parseFloat(String(item.temperature)));
 
-        setXLabels(xData);
-        setYLabels(yData);
+            setXLabels(xData);
+            setYLabels(yData);
+        }
     }, [props.itemsIn])
 
     return (
