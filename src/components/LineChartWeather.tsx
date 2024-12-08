@@ -20,7 +20,7 @@ export default function LineChartWeather(props: MyProp) {
 
         setXLabels(xData);
         setYLabels(yData);
-    }, [props])
+    }, [props.itemsIn])
 
     return (
         <Paper
