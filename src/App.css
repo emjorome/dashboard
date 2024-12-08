@@ -5,6 +5,112 @@
   text-align: center;
 }
 
+/* Barra de navegación */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  background-color: #003366; /* Azul oscuro */
+  color: white;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #ffcc00; /* Amarillo al pasar el mouse */
+}
+
+/* Introducción */
+.intro {
+  background-color: #003366;
+  display: flex;
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+}
+
+.intro-content {
+  justify-content: space-around;
+  display: grid;
+  align-items: stretch;
+  grid-template-areas: "A B"
+                       "C B";
+  margin: 0 auto;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  grid-area: A;
+}
+
+.intro p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-top: 10px;
+  grid-area: C;
+}
+
+#imagen {
+  grid-area: B;
+}
+
+/* Secciones que ocupan todo el ancho */
+.section {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  margin: 0 auto; /* Centra el contenido en dispositivos más grandes */
+  padding: 20px 0; /* Espaciado vertical */
+  background: rgba(255, 255, 255, 0.7); /* Fondo translúcido */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Ajuste del contenido de la sección */
+.section-content {
+  width: 90%; /* Ajusta para dejar algo de espacio en los laterales */
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  margin: 0 auto; /* Centrado horizontal */
+}
+
+/* Títulos y descripciones */
+.section-title {
+  font-size: 2rem;
+  color: var(--color-sky-dark);
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.section-description {
+  font-size: 1.2rem;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

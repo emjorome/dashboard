@@ -1,4 +1,4 @@
-:root {
+/*:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,78 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}*/
+
+/* Variables de colores para un diseño meteorológico */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --color-sky-light: #87CEEB; /* Azul cielo */
+  --color-sky-dark: #4682B4; /* Azul más oscuro */
+  --color-white: #FFFFFF;    /* Blanco */
+  --color-gray: #F5F5F5;     /* Gris claro */
+  --color-text: #2F4F4F;     /* Texto */
+  --color-highlight: #FFA500; /* Naranja para elementos destacados */
 }
+
+/* Configuración general */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(90deg, #87CEEB 30%, #FFA07A 70%);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* Títulos principales */
+h1, h2, h3 {
+  margin: 0;
+  color: var(--color-white);
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Enlaces */
+a {
+  color: var(--color-highlight);
+  text-decoration: inherit;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--color-white);
+}
+
+/* Botones */
+button {
+  background-color: var(--color-highlight);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--color-sky-dark);
+}
+
+/* Fondo de secciones */
+.section {
+  background-color: var(--color-gray);
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
