@@ -5,21 +5,38 @@ import { useEffect, useState } from 'react';
 
 interface MyProp {
     itemsIn: Item2[];
+    selectedVariable: string;
 }
 
 export default function LineChartWeather(props: MyProp) {
     const [xLabels, setXLabels] = useState<string[]>([]);
     const [yLabels, setYLabels] = useState<number[]>([]);
+    const [name, setName] = useState<string>();
 
     useEffect(() => {
         if (props.itemsIn && props.itemsIn.length > 0) {
             const xData = props.itemsIn.map((item) => String(item.date));
-            const yData = props.itemsIn.map((item) => parseFloat(String(item.temperature)));
-
             setXLabels(xData);
-            setYLabels(yData);
+
+            if (parseInt(props.selectedVariable) == 0){
+                const yData = props.itemsIn.map((item) => parseFloat(String(item.precipitation)));
+                setName("Precipitación");
+                setYLabels(yData);
+            } else if (parseInt(props.selectedVariable) == 1){
+                const yData = props.itemsIn.map((item) => parseFloat(String(item.humidity)));
+                setName("Humedad");
+                setYLabels(yData);
+            } else if (parseInt(props.selectedVariable) == 2){
+                const yData = props.itemsIn.map((item) => parseFloat(String(item.clouds_value)));
+                setName("Nubosidad");
+                setYLabels(yData);
+            } else {
+                const yData = props.itemsIn.map((item) => parseFloat(String(item.precipitation)));
+                setName("Precipitación");
+                setYLabels(yData);
+            }     
         }
-    }, [props.itemsIn])
+    }, [props.itemsIn, props.selectedVariable])
 
     return (
         <Paper
@@ -35,7 +52,7 @@ export default function LineChartWeather(props: MyProp) {
                 width={800}
                 height={500}
                 series={[
-                    { data: yLabels, label: 'Grado Celsius por hora' },
+                    { data: yLabels, label: `Gráfico de ${name}` },
                 ]}
                 xAxis={[{ scaleType: 'point', data: xLabels }]}
             />

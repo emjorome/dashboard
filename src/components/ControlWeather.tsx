@@ -12,13 +12,18 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function ControlWeather() {
+interface ControlWeatherProps {
+    selectedVariable: string;
+    setSelectedVariable: (value: string) => void;
+}
+
+export default function ControlWeather({ selectedVariable, setSelectedVariable }: ControlWeatherProps) {
 
     {/* Constante de referencia a un elemento HTML */ }
     const descriptionRef = useRef<HTMLDivElement>(null);
 
     {/* Variable de estado y función de actualización */ }
-    //let [selected, setSelected] = useState(-1)
+    //let [selected, setSelected] = useState<String>();
 
     {/* Arreglo de objetos */ }
     let items = [
@@ -35,7 +40,7 @@ export default function ControlWeather() {
 
         let idx = parseInt(event.target.value)
         //alert( idx );
-        //setSelected(idx);
+        setSelectedVariable(event.target.value);
 
         {/* Modificación de la referencia descriptionRef */ }
         if (descriptionRef.current !== null) {
@@ -65,7 +70,7 @@ export default function ControlWeather() {
                         labelId="simple-select-label"
                         id="simple-select"
                         label="Variables"
-                        defaultValue='-1'
+                        value = {String(selectedVariable)}
                         onChange={handleChange}
                     >
                         <MenuItem key="-1" value="-1" disabled>Seleccione una variable</MenuItem>

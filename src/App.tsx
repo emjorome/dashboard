@@ -25,6 +25,7 @@ function App() {
    let [indicators, setIndicators] = useState<Indicator[]>([])
    let [items, setItems] = useState<Item[]>([])
    let [items2, setItems2] = useState<Item2[]>([])
+   let [selectedVariable, setSelectedVariable] = useState<string>('precipitation');
 
    {/* Hook: useEffect */ }
    useEffect(() => {
@@ -84,18 +85,14 @@ function App() {
             let clouds = node.querySelector('clouds')?.getAttribute('value') || ''
 
             let date = dateStart + " - " + dateEnd
-            let temperature = node.querySelector('temperature')?.getAttribute('value') || ''
-
-            temperature = (parseFloat(temperature) - 273.15).toFixed(2)
-
-
+            let clouds_value = node.querySelector('clouds')?.getAttribute('all') || ''
 
             dataToTable.push({ dateStart, dateEnd, precipitation, humidity, clouds })
-            dataToGraphip.push({ date, temperature})
+            dataToGraphip.push({ date, precipitation, humidity, clouds_value })
          })
 
          setItems(dataToTable.slice(0, 10))
-         setItems2(dataToGraphip.slice(0,8))
+         setItems2(dataToGraphip.slice(0, 8))
       }
 
       request();
@@ -161,21 +158,11 @@ function App() {
                   <p className="section-description">
                      A continuación se presenta la tabla climática del tiempo actual de Guayaquil, donde nos indica información
                      escencial sobre la precipitación, la humedad o nubosidad que tendá la ciudad en esta y próximas horas.
-                     A su izquierda puede ver las definiciones de los términos antes mencionados.
                   </p>
 
                   {/* Tabla */}
-                  <Grid size={{ xs: 12, sm: 12 }}>
-                     {/* Grid Anidado */}
-                     <Grid container spacing={5} justifyContent="center">
-                        <Grid size={{ xs: 12, sm: 3 }} className="control-container">
-                           <ControlWeather />
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 9 }} className="table-container">
-                           <TableWeather itemsIn={items} />
-                        </Grid>
-                     </Grid>
-
+                  <Grid size={{ xs: 12, sm: 12 }} className="table-container">
+                     <TableWeather itemsIn={items} />
                   </Grid>
 
                </div>
@@ -185,12 +172,24 @@ function App() {
                <div className="section-content">
                   <h2 className="section-title">Gráfica Climática</h2>
                   <p className="section-description">
-                     Podemos observar el cambio de la temperatura a lo largo del día y próximas horas.
+                     Podemos observar el gráfico que se puede cambiar a través de un controlador la precipitación, 
+                     humedad y nubosidad a lo largo del día y próximas horas.
                   </p>
 
                   {/* Gráfico */}
-                  <Grid size={{ xs: 12, sm: 12 }} className="chart-container" container spacing={5} justifyContent="center">
-                     <LineChartWeather itemsIn={items2}/>
+                  <Grid container spacing={5} justifyContent="center">
+
+                     {/* Controlador */}
+                     <Grid size={{ xs: 12, sm: 3 }} className="control-container">
+                        <ControlWeather selectedVariable={selectedVariable}
+                           setSelectedVariable={setSelectedVariable} />
+                     </Grid>
+
+                     {/* Gráfico */}
+                     <Grid size={{ xs: 12, sm: 9 }} className="chart-container" container spacing={5} justifyContent="center">
+                        <LineChartWeather itemsIn={items2} selectedVariable={selectedVariable} />
+                     </Grid>
+
                   </Grid>
 
                </div>
