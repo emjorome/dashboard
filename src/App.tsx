@@ -13,27 +13,27 @@ import Item from './interface/Item';
 import Item2 from './interface/Item2';
 
 interface Indicator {
-   title?: String;
-   subtitle?: String;
-   value?: String;
+   title?: string;
+   subtitle?: string;
+   value?: string;
 }
 
 function App() {
    //const [count, setCount] = useState(0)
 
    {/* Variable de estado y función de actualización */ }
-   let [indicators, setIndicators] = useState<Indicator[]>([])
-   let [items, setItems] = useState<Item[]>([])
-   let [items2, setItems2] = useState<Item2[]>([])
-   let [selectedVariable, setSelectedVariable] = useState<string>('precipitation');
+   const [indicators, setIndicators] = useState<Indicator[]>([])
+   const [items, setItems] = useState<Item[]>([])
+   const [items2, setItems2] = useState<Item2[]>([])
+   const [selectedVariable, setSelectedVariable] = useState<string>('precipitation');
 
    {/* Hook: useEffect */ }
    useEffect(() => {
-      let request = async () => {
+      const request = async () => {
          {/* Request */ }
-         let API_KEY = "ad655bd73162581d52d762d5e28c8076"
-         let response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=Guayaquil&mode=xml&appid=${API_KEY}`)
-         let savedTextXML = await response.text();
+         const API_KEY = "ad655bd73162581d52d762d5e28c8076"
+         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=Guayaquil&mode=xml&appid=${API_KEY}`)
+         const savedTextXML = await response.text();
 
          {/* XML Parser */ }
          const parser = new DOMParser();
@@ -41,25 +41,25 @@ function App() {
 
          {/* Arreglo para agregar los resultados */ }
 
-         let dataToIndicators: Indicator[] = new Array<Indicator>();
+         const dataToIndicators: Indicator[] = new Array<Indicator>();
 
          {/* 
               Análisis, extracción y almacenamiento del contenido del XML 
               en el arreglo de resultados
           */}
 
-         let name = xml.getElementsByTagName("name")[0].innerHTML || ""
+         const name = xml.getElementsByTagName("name")[0].innerHTML || ""
          dataToIndicators.push({ "title": "Location", "subtitle": "City", "value": name })
 
-         let location = xml.getElementsByTagName("location")[1]
+         const location = xml.getElementsByTagName("location")[1]
 
-         let latitude = location.getAttribute("latitude") || ""
+         const latitude = location.getAttribute("latitude") || ""
          dataToIndicators.push({ "title": "Location", "subtitle": "Latitude", "value": latitude })
 
-         let longitude = location.getAttribute("longitude") || ""
+         const longitude = location.getAttribute("longitude") || ""
          dataToIndicators.push({ "title": "Location", "subtitle": "Longitude", "value": longitude })
 
-         let altitude = location.getAttribute("altitude") || ""
+         const altitude = location.getAttribute("altitude") || ""
          dataToIndicators.push({ "title": "Location", "subtitle": "Altitude", "value": altitude })
 
          //console.log(dataToIndicators)
@@ -68,24 +68,24 @@ function App() {
          setIndicators(dataToIndicators)
 
          {/* Arreglo para agregar los resultados */ }
-         let dataToTable: Item[] = new Array<Item>();
-         let dataToGraphip: Item2[] = new Array<Item2>();
+         const dataToTable: Item[] = new Array<Item>();
+         const dataToGraphip: Item2[] = new Array<Item2>();
 
          {/* 
               Análisis, extracción y almacenamiento del contenido del XML 
               en el arreglo de resultados
           */}
-         let timeNodes = xml.querySelectorAll('time')
+         const timeNodes = xml.querySelectorAll('time')
          Array.from(timeNodes).map((node) => {
-            let dateStart = node.getAttribute('from')?.split('T')[1]?.slice(0, 5) || ""
-            let dateEnd = node.getAttribute('to')?.split('T')[1]?.slice(0, 5) || ""
-            let precipitationNode = node.querySelector('precipitation')
-            let precipitation = precipitationNode?.getAttribute('probability') || ""
-            let humidity = node.querySelector('humidity')?.getAttribute('value') || ''
-            let clouds = node.querySelector('clouds')?.getAttribute('value') || ''
+            const dateStart = node.getAttribute('from')?.split('T')[1]?.slice(0, 5) || ""
+            const dateEnd = node.getAttribute('to')?.split('T')[1]?.slice(0, 5) || ""
+            const precipitationNode = node.querySelector('precipitation')
+            const precipitation = precipitationNode?.getAttribute('probability') || ""
+            const humidity = node.querySelector('humidity')?.getAttribute('value') || ''
+            const clouds = node.querySelector('clouds')?.getAttribute('value') || ''
 
-            let date = dateStart + " - " + dateEnd
-            let clouds_value = node.querySelector('clouds')?.getAttribute('all') || ''
+            const date = dateStart + " - " + dateEnd
+            const clouds_value = node.querySelector('clouds')?.getAttribute('all') || ''
 
             dataToTable.push({ dateStart, dateEnd, precipitation, humidity, clouds })
             dataToGraphip.push({ date, precipitation, humidity, clouds_value })
